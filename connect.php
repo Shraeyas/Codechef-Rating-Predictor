@@ -9,7 +9,7 @@
 	$db_password = "chusli";
 	$db_database = "codechef";
 
-	$hash = "sheisfuturemrssinghyes";
+	$hash = "1312psriancghhihcmhuoa";      //Gibberish, 
 
 	$hash_and_salt = '$2a$09$'.$hash.'$';
 

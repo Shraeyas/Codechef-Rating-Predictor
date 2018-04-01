@@ -1,5 +1,7 @@
 <?php
 
+  include ('connect.php');
+
   $get = $_SERVER['REQUEST_URI'];
   $exp = explode('?', $get);
 
@@ -21,4 +23,24 @@
   $cn2 = explode('?', $cn1);
   $contestname = $cn2[0];
 
+  include_once('contests.php');
+
+  $contest = new Contest();
+
+  if($contest -> isvalidcontest($contestname) == -1)
+  {
+    die("Invalid Contest Name.");
+  }
+
+  if($contest -> iftableexists($contestname) == -1)
+  {
+    $contest -> createtable($contestname);
+    $contest -> populate($contestname);
+  }
+
+  else
+  {
+    $contest -> update($contestname);
+    $contest -> populate($contestname);
+  }
 ?>

@@ -1,15 +1,15 @@
 <?php
 
-  /*ini_set('display_startup_errors', 1);
+  ini_set('display_startup_errors', 1);
   ini_set('display_errors', 1);
-  error_reporting(-1);*/
+  error_reporting(-1);
 
   $db_hostname = "localhost";
 	$db_username = "chusli";
 	$db_password = "chusli";
 	$db_database = "codechef";
 
-	$hash = "1312psriancghhihcmhuoa";      //Gibberish, 
+	$hash = "1312psriancghhihcmhuoa";      //Gibberish, Random Text
 
 	$hash_and_salt = '$2a$09$'.$hash.'$';
 

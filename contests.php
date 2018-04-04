@@ -50,6 +50,8 @@
       $total = $contest['totalItems'];
       $perpage = 50;
 
+      
+
       for($page = 1 ; $page <= $pages ; $page++)
       {
         $link = "https://codechef.com/api/rankings/".$contestname."?page=".$page;
@@ -85,10 +87,7 @@
 
     }
 
-    function update($contestname)
-    {
 
-    }
   }
 
 ?>

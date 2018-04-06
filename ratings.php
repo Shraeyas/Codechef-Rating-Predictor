@@ -1,6 +1,6 @@
 <?php
 
-  class User
+  class Rating
   {
     function getratings($username)
     {
@@ -53,7 +53,7 @@
     }
   }
 
-  $ob = new User ();
+  $ob = new Rating ();
   echo $ob -> volatility("shivam_iet");
 
 ?>

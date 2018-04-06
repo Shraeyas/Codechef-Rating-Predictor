@@ -36,7 +36,7 @@
     {
       $ratings = $this -> getratings($username);
 
-      $timesplayed = 1;
+      $timesplayed = 0;
       $rating = 1500;
       $volatility = 125;
 

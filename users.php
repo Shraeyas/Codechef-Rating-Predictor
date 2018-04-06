@@ -67,12 +67,9 @@
       }
     }
 
-    function generate($url)
+    function generate($contestname)
     {
       $participant = [];
-
-      $contestname = $this -> getcontestname($url);
-      $parameters = $this -> getparameters($url);
 
       $link = "https://codechef.com/api/rankings/".$contestname."?page=1";
 
@@ -112,7 +109,6 @@
             $participant[$i]['institution'] = $institution;
             $participant[$i]['rating'] = $rating;
             $participant[$i++]['rank'] = $rank;
-
           }
         }
 
@@ -139,12 +135,12 @@
     }
   }
 
-  $ob = new User();
+  /*$ob = new User();
 
-  $link = "https://www.codechef.com?rankings/LTIME55?filterBy=Institution%3DIndian%20Institute%20of%20Technology%20Kanpur&order=asc&page=2&sortBy=rank";
-  print_r($ob -> generate($link));
+  $url = "https://www.codechef.com?rankings/LTIME55?filterBy=Institution%3DIndian%20Institute%20of%20Technology%20Kanpur&order=asc&page=2&sortBy=rank";
+  print_r($ob -> generate($url));
 
-  echo $ob -> getcontestname($link);
+  echo $ob -> getcontestname($url);
   echo "<br>";
-  echo $ob -> getparameters($link);
+  echo $ob -> getparameters($url);*/
 ?>

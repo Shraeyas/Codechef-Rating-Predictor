@@ -67,6 +67,56 @@
       }
     }
 
+    function getratings($username)
+    {
+      $content = file_get_contents("https://www.codechef.com/users/".$username);
+      $first = explode("var date_versus_rating_all = [", $content);
+      $second = explode("];", $first[1]);
+
+      //echo ($second[0]);
+
+      $third = explode('"rating":"', $second[0]);
+
+      $ratings = array();
+
+      for($i = 1 ; $i < count($third) ; $i++)
+      {
+        $val = explode('","rank":"', $third[$i]);
+        array_push($ratings, $val[0]);
+      }
+
+      return $ratings;
+    }
+
+    function newvolatility($timesplayed, $previousrating, $newrating, $volatility)
+    {
+      $volatilityweight = ((0.5 * $timesplayed + 0.8)/($timesplayed + 0.6));
+
+      $volatility = sqrt(($volatilityweight * ($newrating - $previousrating) * ($newrating - $previousrating) + $volatility * $volatility)/($volatilityweight + 1.1));
+
+      return $volatility;
+    }
+
+    function volatility($username)
+    {
+      $ratings = $this -> getratings($username);
+
+      $timesplayed = count($ratings);
+      $rating = 1500;
+      $volatility = 125;
+
+      for($i = 0 ; $i < $timesplayed - 1 ; $i++)
+      {
+        $volatility = $this -> newvolatility($timesplayed, $rating, $ratings[$i], $volatility);
+        $rating = $ratings[$i];
+
+        $volatility = max(75, $volatility);
+        $volatility = min(200, $volatility);
+      }
+
+      return [$volatility, $timesplayed];
+    }
+
     function generate($contestname)
     {
       $participant = [];
@@ -75,11 +125,6 @@
 
       $data = file_get_contents($link);
       $contest = json_decode($data,true);
-
-      if($contest['contest_info']['contest_code'] != $contestname)
-      {
-        die("Invalid Contest ID");
-      }
 
       $pages = $contest['availablePages'];
       $total = $contest['totalItems'];
@@ -94,7 +139,7 @@
 
         if($page == $pages)
         {
-          $items = $total % 50;
+          $items = $total % $perpage;
 
           for($item = 0 ; $item < $items ; $item++)
           {
@@ -108,13 +153,24 @@
             $participant[$i]['country'] = $country;
             $participant[$i]['institution'] = $institution;
             $participant[$i]['rating'] = $rating;
-            $participant[$i++]['rank'] = $rank;
+
+            $pg = $this -> volatility($username);
+            $participant[$i]['volatility'] = $pg[0];
+            $participant[$i]['timesplayed'] = $pg[1];
+
+            if($participant[$i]['timesplayed'] == 0)
+            {
+              $participant[$i]['rating'] = 1500;
+            }
+            $participant[$i]['rank'] = $rank;
+
+            $i++;
           }
         }
 
         else
         {
-          for($item = 0 ; $item < 50 ; $item++)
+          for($item = 0 ; $item < $perpage ; $item++)
           {
             $username = $contest['list'][$item]['user_handle'];
             $country = $contest['list'][$item]['country'];
@@ -126,18 +182,30 @@
             $participant[$i]['country'] = $country;
             $participant[$i]['institution'] = $institution;
             $participant[$i]['rating'] = $rating;
-            $participant[$i++]['rank'] = $rank;
+
+            $pg = $this -> volatility($username);
+            $participant[$i]['volatility'] = $pg[0];
+            $participant[$i]['timesplayed'] = $pg[1];
+
+            if($participant[$i]['timesplayed'] == 0)
+            {
+              $participant[$i]['rating'] = 1500;
+            }
+
+            $participant[$i]['rank'] = $rank;
+
+            $i++;
+
           }
         }
       }
-
       return $participant;
     }
   }
 
   /*$ob = new User();
-
-  $url = "https://www.codechef.com?rankings/LTIME55?filterBy=Institution%3DIndian%20Institute%20of%20Technology%20Kanpur&order=asc&page=2&sortBy=rank";
+  $ob -> generate("LTIME57");*/
+  /*$url = "https://www.codechef.com?rankings/LTIME55?filterBy=Institution%3DIndian%20Institute%20of%20Technology%20Kanpur&order=asc&page=2&sortBy=rank";
   print_r($ob -> generate($url));
 
   echo $ob -> getcontestname($url);

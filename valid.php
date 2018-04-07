@@ -2,21 +2,30 @@
 
   class Valid
   {
-    function valid($contestname)
+    function ifrunning($contestname)
     {
       $url = "https://codechef.com/contests";
       $data = file_get_contents($url);
 
       $first = explode("Present Contests", $data);
-      $second = $first[1];
 
-      $third = explode("Future Contests", $second);
-      echo $third[0];
+      $second = explode("Future Contests", $first[1]);
+      $haystack = $second[0];
+
+      if(strstr($haystack, $contestname))
+      {
+        return 1;
+      }
+
+      else
+      {
+        return 0;
+      }
     }
   }
 
   $ob = new Valid();
-  $contestname = 'APRIL18';
-  $ob -> valid($contestname);
+
+  $ob -> ifrunning('APRIL8');
 
 ?>

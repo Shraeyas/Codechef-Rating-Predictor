@@ -114,7 +114,7 @@
         $volatility = min(200, $volatility);
       }
 
-      return [$volatility, $timesplayed];
+      return [$volatility, $timesplayed - 1, $ratings[$timesplayed - 1]];
     }
 
     function generate($contestname)
@@ -157,6 +157,7 @@
             $pg = $this -> volatility($username);
             $participant[$i]['volatility'] = $pg[0];
             $participant[$i]['timesplayed'] = $pg[1];
+            $participant[$i]['rating'] = $pg[2];
 
             if($participant[$i]['timesplayed'] == 0)
             {
@@ -186,6 +187,7 @@
             $pg = $this -> volatility($username);
             $participant[$i]['volatility'] = $pg[0];
             $participant[$i]['timesplayed'] = $pg[1];
+            $participant[$i]['rating'] = $pg[2];
 
             if($participant[$i]['timesplayed'] == 0)
             {
@@ -203,12 +205,4 @@
     }
   }
 
-  /*$ob = new User();
-  $ob -> generate("LTIME57");*/
-  /*$url = "https://www.codechef.com?rankings/LTIME55?filterBy=Institution%3DIndian%20Institute%20of%20Technology%20Kanpur&order=asc&page=2&sortBy=rank";
-  print_r($ob -> generate($url));
-
-  echo $ob -> getcontestname($url);
-  echo "<br>";
-  echo $ob -> getparameters($url);*/
 ?>

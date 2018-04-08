@@ -114,16 +114,18 @@
         $volatility = min(200, $volatility);
       }
 
-      return [$volatility, $timesplayed - 1, $ratings[$timesplayed - 1]];
+      return [$volatility, $timesplayed, $ratings[$timesplayed - 1]];
     }
 
     function generate($contestname)
     {
+      include ('connect.php');
+
       $participant = [];
 
-      $link = "https://codechef.com/api/rankings/".$contestname."?page=1";
+      $url = "https://codechef.com/api/rankings/".$contestname."?page=1";
 
-      $data = file_get_contents($link);
+      $data = file_get_contents($url);
       $contest = json_decode($data,true);
 
       $pages = $contest['availablePages'];
@@ -133,8 +135,8 @@
 
       for($page = 1 ; $page <= $pages ; $page++)
       {
-        $link = "https://codechef.com/api/rankings/".$contestname."?page=".$page;
-        $data = file_get_contents($link);
+        $url = "https://codechef.com/api/rankings/".$contestname."?page=".$page;
+        $data = file_get_contents($url);
         $contest = json_decode($data,true);
 
         if($page == $pages)
@@ -164,6 +166,23 @@
               $participant[$i]['rating'] = 1500;
             }
             $participant[$i]['rank'] = $rank;
+
+            $query = "SELECT * FROM ".mysqli_real_escape_string($link, $contestname)." WHERE username = '".mysqli_real_escape_string($link, $participant[$i]['username'])."'";
+            $res = mysqli_query($link, $query);
+
+            if(mysqli_num_rows($res) == 0)
+            {
+              $query = "INSERT INTO ".mysqli_real_escape_string($link, $contestname)." (`rank`, `username`, `institution`, `country`, `volatility`, `rating`, `newrating`, `timesplayed`) VALUES ('".mysqli_real_escape_string($link, $participant[$i]['rank'])."', '".mysqli_real_escape_string($link, $participant[$i]['username'])."', '".mysqli_real_escape_string($link, $participant[$i]['institution'])."', '".mysqli_real_escape_string($link, $participant[$i]['country'])."', '".mysqli_real_escape_string($link, $participant[$i]['volatility'])."', '".mysqli_real_escape_string($link, $participant[$i]['rating'])."', '".mysqli_real_escape_string($link, $participant[$i]['rating'])."', '".mysqli_real_escape_string($link, $participant[$i]['timesplayed'])."')";
+
+              mysqli_query($link, $query);
+            }
+
+            else
+            {
+              $query = "UPDATE ".mysqli_real_escape_string($link, $contestname)." SET `rank` = '".mysqli_real_escape_string($link, $participant[$i]['rank'])."', `institution` = '".mysqli_real_escape_string($link, $participant[$i]['institution'])."', `country` = '".mysqli_real_escape_string($link, $participant[$i]['country'])."', `volatility` = '".mysqli_real_escape_string($link, $participant[$i]['volatility'])."', `rating` = '".mysqli_real_escape_string($link, $participant[$i]['rating'])."', `timesplayed` = '".mysqli_real_escape_string($link, $participant[$i]['timesplayed'])."' WHERE username = '".mysqli_real_escape_string($link, $participant[$i]['username'])."'";
+
+              mysqli_query($link, $query);
+            }
 
             $i++;
           }
@@ -196,11 +215,29 @@
 
             $participant[$i]['rank'] = $rank;
 
+            $query = "SELECT * FROM ".mysqli_real_escape_string($link, $contestname)." WHERE username = '".mysqli_real_escape_string($link, $participant[$i]['username'])."'";
+            $res = mysqli_query($link, $query);
+
+            if(mysqli_num_rows($res) == 0)
+            {
+              $query = "INSERT INTO ".mysqli_real_escape_string($link, $contestname)." (`rank`, `username`, `institution`, `country`, `volatility`, `rating`, `newrating`, `timesplayed`) VALUES ('".mysqli_real_escape_string($link, $participant[$i]['rank'])."', '".mysqli_real_escape_string($link, $participant[$i]['username'])."', '".mysqli_real_escape_string($link, $participant[$i]['institution'])."', '".mysqli_real_escape_string($link, $participant[$i]['country'])."', '".mysqli_real_escape_string($link, $participant[$i]['volatility'])."', '".mysqli_real_escape_string($link, $participant[$i]['rating'])."', '".mysqli_real_escape_string($link, $participant[$i]['rating'])."', '".mysqli_real_escape_string($link, $participant[$i]['timesplayed'])."')";
+
+              mysqli_query($link, $query);
+            }
+
+            else
+            {
+              $query = "UPDATE ".mysqli_real_escape_string($link, $contestname)." SET `rank` = '".mysqli_real_escape_string($link, $participant[$i]['rank'])."', `institution` = '".mysqli_real_escape_string($link, $participant[$i]['institution'])."', `country` = '".mysqli_real_escape_string($link, $participant[$i]['country'])."', `volatility` = '".mysqli_real_escape_string($link, $participant[$i]['volatility'])."', `rating` = '".mysqli_real_escape_string($link, $participant[$i]['rating'])."', `timesplayed` = '".mysqli_real_escape_string($link, $participant[$i]['timesplayed'])."' WHERE username = '".mysqli_real_escape_string($link, $participant[$i]['username'])."'";
+
+              mysqli_query($link, $query);
+            }
+
             $i++;
 
           }
         }
       }
+
       return $participant;
     }
   }

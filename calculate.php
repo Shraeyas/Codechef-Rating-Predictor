@@ -22,7 +22,7 @@
         if($i == $ind)
         continue;
 
-        $ERank += this -> eab($ra, $va, $participant[$i]['rating'], $participant[$i]['volatility']);
+        $ERank += $this -> eab($ra, $va, $participant[$i]['rating'], $participant[$i]['volatility']);
       }
 
       return $ERank;
@@ -41,7 +41,7 @@
       while($ans = mysqli_fetch_array($res))
       {
         $participant[$i]['username'] = $ans['username'];
-        $participant[$i]['rank'] = $ans['rank'] + 1;
+        $participant[$i]['rank'] = $ans['rank'];
         $participant[$i]['volatility'] = $ans['volatility'];
         $participant[$i]['rating'] = $ans['rating'];
         $participant[$i]['newrating'] = $ans['newrating'];
@@ -106,8 +106,8 @@
     }
   }
 
-  $ob = new Calculate();
+  /*$ob = new Calculate();
   $contest = "COOK92A";
-  $ob -> calculaterating($contest);
+  $ob -> calculaterating($contest);*/
 
 ?>

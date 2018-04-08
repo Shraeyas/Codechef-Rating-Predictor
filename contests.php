@@ -47,6 +47,7 @@
     {
       $check['LTIME'] = 1;
       $check['COOK'] = 1;
+
       $check["JAN"] = 1;
       $check["FEB"] = 1;
       $check["MARCH"] = 1;
@@ -70,6 +71,9 @@
         break;
       }
 
+      if($chk == 'LTIME')
+      return 2;
+
       if($check[$chk])
       return 1;
 
@@ -85,8 +89,11 @@
         return 0;
       }
 
-      if($this -> isproprietary($contestname))
+      if($this -> isproprietary($contestname) == 2)
       return 1;
+
+      if($this -> isproprietary($contestname))
+      return 2;
 
       if($this -> israted($haystack, $contestname))
       return 1;

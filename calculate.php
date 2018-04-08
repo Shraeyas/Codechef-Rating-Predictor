@@ -41,7 +41,7 @@
       while($ans = mysqli_fetch_array($res))
       {
         $participant[$i]['username'] = $ans['username'];
-        $participant[$i]['rank'] = $ans['rank'];
+        $participant[$i]['rank'] = $ans['rank'] + 1;
         $participant[$i]['volatility'] = $ans['volatility'];
         $participant[$i]['rating'] = $ans['rating'];
         $participant[$i]['newrating'] = $ans['newrating'];

@@ -105,7 +105,7 @@
       $rating = 1500;
       $volatility = 125;
 
-      for($i = 0 ; $i < $timesplayed - 1 ; $i++)
+      for($i = 0 ; $i < $timesplayed ; $i++)
       {
         $volatility = $this -> newvolatility($timesplayed, $rating, $ratings[$i], $volatility);
         $rating = $ratings[$i];

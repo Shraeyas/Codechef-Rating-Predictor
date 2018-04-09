@@ -1,4 +1,4 @@
-<div class="footer" style = "margin-top : 10%">
+<div class="footer" style = "margin-top : 20%">
 <hr>
 
 	<style>

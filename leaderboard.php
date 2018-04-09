@@ -15,12 +15,12 @@
   if(!mysqli_query($link, $query))
   die('Nothing Found for this Contest');
 
-  if(isset($_GET['institution']))
+  if($_GET['institution'] != "")
   {
-    $query = "SELECT * FROM ".mysqli_real_escape_string($link, $_GET['contest'])." WHERE institution LIKE '%".mysqli_real_escape_string($link, $_GET['institution'])."%' ORDER BY rank";
+    echo $query = "SELECT * FROM ".mysqli_real_escape_string($link, $_GET['contest'])." WHERE institution LIKE '%".mysqli_real_escape_string($link, $_GET['institution'])."%' ORDER BY rank";
   }
 
-  else if(isset($_GET['country']))
+  else if($_GET['country'] != "")
   {
     $query = "SELECT * FROM ".mysqli_real_escape_string($link, $_GET['contest'])." WHERE country LIKE '%".mysqli_real_escape_string($link, $_GET['country'])."%' ORDER BY rank";
   }
@@ -68,13 +68,18 @@
       <form>
 
         <div class="form-group">
+          <label for="exampleInputEmail1">Contest</label>
+          <input name="contest" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Contest" value = "<?php if(isset($_GET['contest'])) echo $_GET['contest']; ?>">
+        </div>
+
+        <div class="form-group">
           <label for="exampleInputEmail1">Country</label>
-          <input class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Country" value = "<?php if(isset($_GET['country'])) echo $_GET['country']; ?>">
+          <input name="country" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Country" value = "<?php if(isset($_GET['country'])) echo $_GET['country']; ?>">
         </div>
 
         <div class="form-group">
           <label for="exampleInputPassword1">Institution</label>
-          <input class="form-control" id="exampleInputPassword1" placeholder="Institution" value = "<?php if(isset($_GET['institution'])) echo $_GET['institution']; ?>">
+          <input name="institution" class="form-control" id="exampleInputPassword1" placeholder="Institution" value = "<?php if(isset($_GET['institution'])) echo $_GET['institution']; ?>">
         </div>
 
         <button type="submit" class="btn btn-primary">Submit</button>
@@ -89,10 +94,10 @@
             <th scope="col">#</th>
             <th scope="col">Rank</th>
             <th scope="col">Name</th>
-            <th scope="col">Rating</th>
-            <th scope="col">New Rating</th>
-            <th scope="col">Changes</th>
-            <th scope="col" style = "width:200px">Institution</th>
+            <th scope="col" style = "width:150px">Rating</th>
+            <th scope="col" style = "width:150px">New Rating</th>
+            <th scope="col" style = "width:150px">Changes</th>
+            <th scope="col" style = "width:150px">Institution</th>
             <th scope="col">Country</th>
 
           </tr>
@@ -135,3 +140,4 @@
 
   </body>
 </html>
+<?php include ('footer.php'); ?>

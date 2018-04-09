@@ -164,3 +164,5 @@
   </div>
 
 </html>
+
+<?php include('footer.php'); ?>

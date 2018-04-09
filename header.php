@@ -1,4 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <img class="small_image" src = "img/b.jpg">
   <a class="navbar-brand" href="index.php">Rating Predictor</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -8,10 +9,16 @@
     <ul class="navbar-nav mr-auto">
 
       <li class="nav-item active">
-        <a class="nav-link" href="index.php">Home</a>
+
+        <a class="nav-link" href="index.php"><img class="small_image" src = "img/home.png"> Home</a>
+      </li>
+
+      <li>
+        <a class="nav-link" style = "color : white" href="https://github.com/Shraeyas/cc_rp"><img class="small_image" src = "img/github.png"> Github</a>
       </li>
 
     </ul>
+
 
     <!--<form class="form-inline my-2 my-lg-0">
       <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">

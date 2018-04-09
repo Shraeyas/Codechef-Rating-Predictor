@@ -14,7 +14,7 @@
       </li>
 
       <li>
-        <a class="nav-link" style = "color : white" href="https://github.com/Shraeyas/cc_rp"><img class="small_image" src = "img/github.png"> Github</a>
+        <a class="nav-link" style = "color : white" href="https://github.com/Shraeyas/Codechef-Rating-Predictor"><img class="small_image" src = "img/github.png"> Github</a>
       </li>
 
     </ul>

@@ -151,12 +151,19 @@
             $rating = $contest['list'][$item]['rating'];
             $rank = $contest['list'][$item]['rank'];
 
+            $query = "SELECT * FROM ".mysqli_real_escape_string($link, $contestname)." WHERE username = '".mysqli_real_escape_string($link, $username)."'";
+            $res = mysqli_query($link, $query);
+
+            if(mysqli_num_rows($res) != 0)
+            continue;
+
+
             $participant[$i]['username'] = $username;
             $participant[$i]['country'] = $country;
             $participant[$i]['institution'] = $institution;
             $participant[$i]['rating'] = $rating;
 
-            
+
             $pg = $this -> volatility($username);
             $participant[$i]['volatility'] = $pg[0];
             $participant[$i]['timesplayed'] = $pg[1];
@@ -198,6 +205,12 @@
             $institution = $contest['list'][$item]['institution'];
             $rating = $contest['list'][$item]['rating'];
             $rank = $contest['list'][$item]['rank'];
+
+            $query = "SELECT * FROM ".mysqli_real_escape_string($link, $contestname)." WHERE username = '".mysqli_real_escape_string($link, $username)."'";
+            $res = mysqli_query($link, $query);
+
+            if(mysqli_num_rows($res) != 0)
+            continue;
 
             $participant[$i]['username'] = $username;
             $participant[$i]['country'] = $country;

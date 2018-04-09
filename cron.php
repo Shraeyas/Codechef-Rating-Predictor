@@ -5,6 +5,10 @@
   include_once ("database.php");
   include_once ("calculate.php");
 
+
+  $query = "CREATE TABLE IF NOT EXISTS `livecontests` (`id` INT NOT NULL AUTO_INCREMENT, `contestid` VARCHAR(150) , `remove` INT, PRIMARY KEY(id))";
+  mysqli_query($link, $query);
+
   $contest = new Contests();
   $haystack = $contest -> getlivelist();
 

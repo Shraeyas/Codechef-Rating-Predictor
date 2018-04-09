@@ -5,7 +5,8 @@
     //Eab
     function eab($ra, $va, $rb, $vb)
     {
-      return (1/(1 + ($ra - $rb)/(4 * sqrt($va * $va + $vb * $vb))));
+      $ch = ($ra - $rb)/(sqrt($va * $va + $vb * $vb));
+      return (1/(1 + pow(4, $ch)));
     }
 
     //Expected Rank
@@ -71,9 +72,9 @@
         $erank = $this -> Erank($participant, $i);
 
         //$erank = abs($erank);
-        $eperf = log(($n)/($erank - 1))/(log(4));
+        $eperf = log(($n)/($erank - 1 + $pr))/(log(4));
 
-        $aperf = log(($n)/($participant[$i]['rank'] - 1))/(log(4));
+        $aperf = log(($n)/($participant[$i]['rank'] - 1 + $pr))/(log(4));
 
         $timesplayed = $participant[$i]['timesplayed'];
         $rating = $participant[$i]['rating'];

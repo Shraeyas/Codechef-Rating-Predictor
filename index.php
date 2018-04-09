@@ -1,6 +1,6 @@
 <?php
 
-  include ('header.php');
+
 
   class Redirect
   {
@@ -110,6 +110,7 @@
 ?>
 
 
+<?php include('header.php'); ?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -134,6 +135,9 @@
 
 
   <div class = "container">
+    <br><br>
+    <h1>Live Contests</h1>
+    <br>
 
     <table class="table table-striped table-dark">
       <thead>

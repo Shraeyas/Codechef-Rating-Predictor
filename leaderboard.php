@@ -92,7 +92,6 @@
         <thead>
           <tr>
             <th scope="col">#</th>
-            <th scope="col">Rank</th>
             <th scope="col">Name</th>
             <th scope="col" style = "width:150px">Rating</th>
             <th scope="col" style = "width:150px">New Rating</th>
@@ -113,7 +112,7 @@
 
             $pg .= "<tr>";
             $pg .= "<th scope = 'row'>".$i."</th>";
-            $pg .= "<td>".$ans['rank']."</td>";
+            
             $pg .= "<td>".$ans['username']."</td>";
             $pg .= "<td>".round($ans['rating'], 2)."</td>";
             $pg .= "<td>".round($ans['newrating'], 2)."</td>";

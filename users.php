@@ -156,6 +156,7 @@
             $participant[$i]['institution'] = $institution;
             $participant[$i]['rating'] = $rating;
 
+            
             $pg = $this -> volatility($username);
             $participant[$i]['volatility'] = $pg[0];
             $participant[$i]['timesplayed'] = $pg[1];

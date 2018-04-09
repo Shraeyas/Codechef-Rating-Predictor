@@ -93,7 +93,7 @@
 
             if(mysqli_num_rows($res) != 0)
             {
-              $query_cc = "UPDATE ".mysqli_real_escape_string($link, $contestname)." SET `rank` = '".mysqli_real_escape_string($link, $participant[$i]['rank'])."' WHERE username = '".mysqli_real_escape_string($link, $participant[$i]['username'])."'";
+              $query_cc = "UPDATE ".mysqli_real_escape_string($link, $contestname)." SET `rank` = '".mysqli_real_escape_string($link, $rank)."' WHERE username = '".mysqli_real_escape_string($link, $username)."'";
 
               mysqli_query($link, $query_cc);
 
@@ -154,7 +154,7 @@
 
             if(mysqli_num_rows($res) != 0)
             {
-              $query_cc = "UPDATE ".mysqli_real_escape_string($link, $contestname)." SET `rank` = '".mysqli_real_escape_string($link, $participant[$i]['rank'])."' WHERE username = '".mysqli_real_escape_string($link, $participant[$i]['username'])."'";
+              $query_cc = "UPDATE ".mysqli_real_escape_string($link, $contestname)." SET `rank` = '".mysqli_real_escape_string($link, $rank)."' WHERE username = '".mysqli_real_escape_string($link, $username)."'";
 
               mysqli_query($link, $query_cc);
 

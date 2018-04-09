@@ -13,7 +13,7 @@
     {
       $size = count($participant);
 
-      $ERank = 0.1;
+      $ERank = 1;
       $ra = $participant[$ind]['rating'];
       $va = $participant[$ind]['volatility'];
 
@@ -41,7 +41,7 @@
       while($ans = mysqli_fetch_array($res))
       {
         $participant[$i]['username'] = $ans['username'];
-        $participant[$i]['rank'] = $ans['rank'] + 0.1;
+        $participant[$i]['rank'] = $ans['rank'] + 1;
         $participant[$i]['volatility'] = $ans['volatility'];
         $participant[$i]['rating'] = $ans['rating'];
         $participant[$i]['newrating'] = $ans['newrating'];
@@ -70,7 +70,7 @@
       {
         $erank = $this -> Erank($participant, $i);
 
-        $erank = abs($erank);
+        //$erank = abs($erank);
         $eperf = log(($n)/($erank - 1))/(log(4));
 
         $aperf = log(($n)/($participant[$i]['rank'] - 1))/(log(4));

@@ -4,69 +4,6 @@
   {
     // Gets data in JSON format from the contest page
 
-    function getcontestname($url)
-    {
-        $get = $url;
-        $exp = explode('?', $get);
-
-        $link = "https://www.codechef.com/";
-
-        for($i = 1 ; $i < count($exp) ; $i++)
-        {
-          if($i != 1)
-          {
-            $link = $link.'?';
-          }
-
-          $link .= $exp[$i];
-        }
-
-        $cn = explode('/', $link);
-        $cn1 = $cn[count($cn) - 1];
-
-        $cn2 = explode('?', $cn1);
-        $contestname = $cn2[0];
-
-        return $contestname;
-    }
-
-    function getparameters($url)
-    {
-      $get = $url;
-      $exp = explode('?', $get);
-
-      $link = "https://www.codechef.com/";
-
-      for($i = 1 ; $i < count($exp) ; $i++)
-      {
-        if($i != 1)
-        {
-          $link = $link.'?';
-        }
-
-        $link .= $exp[$i];
-      }
-
-      $cn = explode('/', $link);
-      $cn1 = $cn[count($cn) - 1];
-
-      $cn2 = explode('?', $cn1);
-      $contestname = $cn2[0];
-
-      $parameter = $cn2[1];
-
-      if(strstr($parameter, "filterBy="))
-      {
-        $ss = explode("filterBy=", $parameter);
-        $pg = explode("&", $ss[1]);
-
-        $type = explode("%3D", $pg[0]);
-        echo $type[0];
-        echo "<br>";
-        echo urldecode($type[1]);
-      }
-    }
-
     function getratings($username)
     {
       $content = file_get_contents("https://www.codechef.com/users/".$username);

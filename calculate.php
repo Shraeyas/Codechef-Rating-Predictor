@@ -14,15 +14,12 @@
     {
       $size = count($participant);
 
-      $ERank = 1;
+      $ERank = 0;
       $ra = $participant[$ind]['rating'];
       $va = $participant[$ind]['volatility'];
 
       for($i = 0 ; $i < $size ; $i++)
       {
-        if($i == $ind)
-        continue;
-
         $ERank += $this -> eab($ra, $va, $participant[$i]['rating'], $participant[$i]['volatility']);
       }
 
@@ -37,13 +34,28 @@
       $i = 0;
       $participant = [];
 
+      $countrank = [];
+
       $ratingavg = 0.0;
 
       while($ans = mysqli_fetch_array($res))
       {
         $participant[$i]['username'] = $ans['username'];
-        $participant[$i]['rank'] = $ans['rank'] + 1;
+        $participant[$i]['rank'] = $ans['rank'];
+
+        $countrank[$ans['rank']]++;
+
         $participant[$i]['volatility'] = $ans['volatility'];
+        //$participant[$i]['volatility'] = 125;
+
+
+        if($participant[$i]['volatility'] < 80)
+        $participant[$i]['volatility'] = 143;
+
+        else// if($participant[$i]['volatility'] > 100 && $participant[$i]['volatility'] < 125)
+        $participant[$i]['volatility'] = 93;
+
+
         $participant[$i]['rating'] = $ans['rating'];
         $participant[$i]['newrating'] = $ans['newrating'];
         $participant[$i]['timesplayed'] = $ans['timesplayed'];
@@ -72,6 +84,9 @@
         $erank = $this -> Erank($participant, $i);
 
         //$erank = abs($erank);
+        $pr = $countrank[$participant[$i]['rank']];
+        //$pr = 0;
+
         $eperf = log(($n)/($erank - 1 + $pr))/(log(4));
 
         $aperf = log(($n)/($participant[$i]['rank'] - 1 + $pr))/(log(4));
@@ -82,7 +97,7 @@
 
         $rwa = (0.4 * $timesplayed + 0.2)/(0.7 * $timesplayed + 0.6);
 
-        $newrating = $rating + ($aperf - $eperf) * $cf * $rwa;
+        $newrating = $rating + ($aperf - $eperf) * $cf * $rwa/log(4);
 
         $maxchange = 100 + (75/($timesplayed + 1)) + (100 * 500)/(abs($rating - 1500) + 500);
 
@@ -107,8 +122,8 @@
     }
   }
 
-  /*$ob = new Calculate();
-  $contest = "COOK92A";
-  $ob -> calculaterating($contest);*/
+  $ob = new Calculate();
+  $contest = "APRIL18A";
+  $ob -> calculaterating($contest);
 
 ?>

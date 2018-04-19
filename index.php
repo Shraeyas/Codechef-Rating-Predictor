@@ -137,6 +137,7 @@
   <div class = "container">
     <br><br>
     <h1>Live Contests</h1>
+    <small>Only Rated Contests will be shown</small>
     <br>
 
     <table class="table table-striped table-dark">
@@ -165,6 +166,43 @@
 
       </tbody>
     </table>
+
+
+    <br><br>
+    <h1>All Contests</h1>
+    <br>
+
+    <table class="table table-striped table-dark">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">ContestID</th>
+        </tr>
+
+      </thead>
+      <tbody style = "font-size:14px;font-weight:bold;">
+
+        <?php
+          include ('connect.php');
+          $query = "SHOW TABLES LIKE '%%'";
+          $res = mysqli_query($link, $query);
+
+          $i = 0;
+          while($ans = mysqli_fetch_array($res))
+          {
+            if($ans[0] == 'livecontests')
+            continue;
+
+            echo "<tr><td scope = 'row'>".++$i."</td>";
+            echo "<td  scope = 'row'><a style = 'color:#FFFFFF' href = 'leaderboard.php?contest=".$ans[0]."'>".$ans[0]."</a></td></tr>";
+          }
+
+        ?>
+
+      </tbody>
+    </table>
+
+
   </div>
 
 </html>

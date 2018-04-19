@@ -44,7 +44,7 @@
 
       for($i = 0 ; $i < $timesplayed ; $i++)
       {
-        $volatility = $this -> newvolatility($i, $rating, $ratings[$i], $volatility);
+        $volatility = $this -> newvolatility($i, $rating, $ratings[$timesplayed - 1], $volatility);
         $rating = $ratings[$i];
 
         $volatility = max(75, $volatility);

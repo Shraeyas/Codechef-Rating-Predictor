@@ -101,6 +101,8 @@
           $pg = "";
           while($ans = mysqli_fetch_array($res))
           {
+            if($ans['rank'] == 0)
+            continue;
             $changes = round($ans['newrating'] - $ans['rating'], 2);
 
             $pg .= "<tr>";

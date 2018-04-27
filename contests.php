@@ -36,7 +36,7 @@
       $first = explode($contestname, $haystack);
       $second = explode("</tr>", $first[2]);
 
-      if(strstr($second[0], "(Rated)"))
+      if(strstr($second[0], "(Rated"))
       return 1;
 
       return 0;

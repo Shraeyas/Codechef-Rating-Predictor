@@ -90,7 +90,7 @@
       }
 
       if($this -> isproprietary($contestname) == 2)
-      return 1;
+      return 2;
 
       if($this -> isproprietary($contestname))
       return 2;

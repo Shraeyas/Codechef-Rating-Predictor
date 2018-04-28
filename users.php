@@ -203,7 +203,8 @@
           }
         }
         
-        if(time() - $start_time > 600)
+        
+        if(time() - $start_time > 600/($GLOBALS['ncon']))
         return $participant;
       }
       

@@ -48,16 +48,21 @@
       $rank = 0;
       $previousscore = 99999;
       $ratingavg = 0.0;
-      $pg = 0;
+      $pg = 1;
 
       while($ans = mysqli_fetch_array($res))
       {
-        $pg++;
+        
         if($previousscore > $ans['score'])
         {
           $rank = $rank + $pg;
           $previousscore = $ans['score'];
-          $pg = 0;
+          $pg = 1;
+        }
+        
+        else if($previousscore == $ans['score'])
+        {
+            $pg++;
         }
 
         $participant[$i]['username'] = $ans['username'];
@@ -99,13 +104,13 @@
 
       $cf = sqrt(($va2/($n + $pr)) + ($rravg/($n - 1 + $pr)));
 
+    //print_r($participant);
+
       for($i = 0 ; $i < $n ; $i++)
       {
         $erank = $this -> Erank($participant, $i);
 
         //$erank = abs($erank);
-        $pr = $countrank[$participant[$i]['rank']];
-        $pr = 1;
 
         if($erank != 1)
         {
@@ -154,7 +159,7 @@
           }
         }
 
-        $query = "UPDATE ".mysqli_real_escape_string($link, $contestname)." SET newrating = '".mysqli_real_escape_string($link, $newrating)."', rank = '".mysqli_real_escape_string($link, $rank)."' WHERE username = '".mysqli_real_escape_string($link, $username)."'";
+        $query = "UPDATE ".mysqli_real_escape_string($link, $contestname)." SET newrating = '".mysqli_real_escape_string($link, $newrating)."', rank = '".mysqli_real_escape_string($link, $participant[$i]['rank'])."' WHERE username = '".mysqli_real_escape_string($link, $username)."'";
 
         mysqli_query($link, $query);
       }
@@ -162,5 +167,7 @@
     }
   }
 
+/*$ob = new Calculate();
+$ob -> calculaterating("MAY18B");*/
 
 ?>

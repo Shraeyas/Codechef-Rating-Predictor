@@ -46,7 +46,7 @@
 
       $countrank = [];
       $rank = 0;
-      $previousscore = -1;
+      $previousscore = 99999;
       $ratingavg = 0.0;
       $pg = 0;
 

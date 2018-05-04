@@ -8,8 +8,8 @@
     function getratings($username)
     {
       $content = file_get_contents("https://www.codechef.com/users/".$username);
-      $first = explode("var date_versus_rating_all = [", $content);
-      $second = explode("];", $first[1]);
+      $first = explode('date_versus_rating":{"all":[', $content);
+      $second = explode('],"', $first[1]);
 
       //echo ($second[0]);
 

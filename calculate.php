@@ -48,13 +48,16 @@
       $rank = 0;
       $previousscore = -1;
       $ratingavg = 0.0;
+      $pg = 0;
 
       while($ans = mysqli_fetch_array($res))
       {
+        $pg++;
         if($previousscore > $ans['score'])
         {
-          $rank++;
+          $rank = $rank + $pg;
           $previousscore = $ans['score'];
+          $pg = 0;
         }
 
         $participant[$i]['username'] = $ans['username'];

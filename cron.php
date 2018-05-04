@@ -27,6 +27,33 @@
 
   $size = count($livelist);
 
+  $database_ob = new Database();
+  $calculate_ob = new Calculate();
+
+  $query = "SELECT * FROM livecontests";
+  $res = mysqli_query($link, $query);
+  
+  $GLOBALS['ncon'] = mysqli_num_rows($res);
+
+  while($ans = mysqli_fetch_array($res))
+  {
+    $database_ob -> update($ans['contestid']);
+    $calculate_ob -> calculaterating($ans['contestid']);
+  }
+  
+  //$database_ob -> update('COOK93B');
+  //$calculate_ob -> calculaterating('COOK93B');
+
+  //print_r(explode("<td>", $haystack));
+
+  /*$query = "SELECT * FROM chomu";
+  $res = mysqli_query($link, $query);
+
+  while($ans = mysqli_fetch_array($res))
+  {
+    $contestname = $ans['contestid'];
+  }*/
+  
   $query = "DELETE FROM livecontests";
   mysqli_query($link, $query);
 
@@ -50,27 +77,5 @@
     mysqli_query($link, $query);
 
   }
-
-  $database_ob = new Database();
-  $calculate_ob = new Calculate();
-
-  $query = "SELECT * FROM livecontests";
-  $res = mysqli_query($link, $query);
-
-  while($ans = mysqli_fetch_array($res))
-  {
-    $database_ob -> update($ans['contestid']);
-    $calculate_ob -> calculaterating($ans['contestid']);
-  }
-
-  //print_r(explode("<td>", $haystack));
-
-  /*$query = "SELECT * FROM chomu";
-  $res = mysqli_query($link, $query);
-
-  while($ans = mysqli_fetch_array($res))
-  {
-    $contestname = $ans['contestid'];
-  }*/
-
+  
 ?>

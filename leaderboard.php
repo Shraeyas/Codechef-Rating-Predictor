@@ -103,14 +103,14 @@
           {
             if($ans['rank'] == 0)
             continue;
-            $changes = round($ans['newrating'] - $ans['rating'], 2);
+            $changes = round(ceil($ans['newrating']) - $ans['rating'], 2);
 
             $pg .= "<tr>";
             $pg .= "<th scope = 'row'>".$i."</th>";
             $pg .= "<td>".$ans['rank']."</td>";
             $pg .= "<td>".$ans['username']."</td>";
             $pg .= "<td>".round($ans['rating'], 2)."</td>";
-            $pg .= "<td>".round($ans['newrating'], 2)."</td>";
+            $pg .= "<td>".ceil($ans['newrating'])."</td>";
 
             if($changes >= 0)
             $pg .= "<td style = 'color: #31fc40'>".$changes."</td>";

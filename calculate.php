@@ -14,12 +14,13 @@
     {
       $size = count($participant);
 
-      $ERank = 0.0;
+      $ERank = 0.5;
       $ra = $participant[$ind]['rating'];
       $va = $participant[$ind]['volatility'];
 
       for($i = 0 ; $i < $size ; $i++)
       {
+          
         $ERank += $this -> eab($ra, $va, $participant[$i]['rating'], $participant[$i]['volatility']);
       }
 
@@ -47,15 +48,15 @@
 
         $participant[$i]['volatility'] = $ans['volatility'];
         //$participant[$i]['volatility'] = 125;
-        
-        
+
+
         /*if($participant[$i]['volatility'] < 80)
         $participant[$i]['volatility'] = 143;
 
         else// if($participant[$i]['volatility'] > 100 && $participant[$i]['volatility'] < 125)
         $participant[$i]['volatility'] = 93;*/
 
-        
+
         $participant[$i]['rating'] = $ans['rating'];
         $participant[$i]['newrating'] = $ans['newrating'];
         $participant[$i]['timesplayed'] = $ans['timesplayed'];
@@ -77,7 +78,7 @@
         $rravg += ($participant[$i]['rating'] - $ratingavg) * ($participant[$i]['rating'] - $ratingavg);
       }
 
-      $cf = sqrt(($va2/$n) + ($rravg/($n - 1)));
+      $cf = sqrt(($va2/($n + $pr)) + ($rravg/($n - 1 + $pr)));
 
       for($i = 0 ; $i < $n ; $i++)
       {
@@ -85,11 +86,14 @@
 
         //$erank = abs($erank);
         $pr = $countrank[$participant[$i]['rank']];
-        //$pr = 0;
+        $pr = 1;
 
-        $eperf = log(($n)/($erank - 1 + $pr))/(log(4));
+        $eperf = log(($n + $pr)/($erank - 1 + $pr))/(log(4));
+        //var ECPerf = Math.log((N/(curr.rank - 1 + add) - 1)/(N/EPerf - 1));
+        $ecperf = log(($n/($participant[$i]['rank'] - 1 + $pr) - 1)/($n/$eperf - 1));
+        $ecperf /= log(4);
 
-        $aperf = log(($n)/($participant[$i]['rank'] - 1 + $pr))/(log(4));
+        $aperf = log(($n + $pr)/($participant[$i]['rank'] - 1 + $pr))/(log(4));
 
         $timesplayed = $participant[$i]['timesplayed'];
         $rating = $participant[$i]['rating'];
@@ -121,9 +125,9 @@
 
     }
   }
-
+  
   /*$ob = new Calculate();
-  $contest = "COOK92A";
+  $contest = "LTIME59A";
   $ob -> calculaterating($contest);*/
 
 ?>

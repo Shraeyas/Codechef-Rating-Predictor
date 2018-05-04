@@ -26,6 +26,7 @@
     //Adds Users in the Database
     function update($contestname)
     {
+        
       include ('connect.php');
       include_once ('users.php');
 

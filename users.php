@@ -2,6 +2,7 @@
 
   class User
   {
+      
     // Gets data in JSON format from the contest page
 
     function getratings($username)
@@ -44,7 +45,7 @@
 
       for($i = 0 ; $i < $timesplayed ; $i++)
       {
-        $volatility = $this -> newvolatility($i, $rating, $ratings[$timesplayed - 1], $volatility);
+        $volatility = $this -> newvolatility($i, $rating, $ratings[$i], $volatility);
         $rating = $ratings[$i];
 
         $volatility = max(75, $volatility);
@@ -56,6 +57,8 @@
 
     function generate($contestname)
     {
+        $start_time = time();    
+    
       include ('connect.php');
 
       $participant = [];
@@ -199,8 +202,13 @@
 
           }
         }
+        
+        
+        if(time() - $start_time > 600/($GLOBALS['ncon']))
+        return $participant;
       }
-
+      
+      
       return $participant;
     }
   }

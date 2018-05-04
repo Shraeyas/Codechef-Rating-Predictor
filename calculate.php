@@ -15,12 +15,12 @@
       $size = count($participant);
 
       $ERank = 0.0;
+
       $ra = $participant[$ind]['rating'];
       $va = $participant[$ind]['volatility'];
 
       for($i = 0 ; $i < $size ; $i++)
       {
-
         $ERank += $this -> eab($ra, $va, $participant[$i]['rating'], $participant[$i]['volatility']);
       }
 

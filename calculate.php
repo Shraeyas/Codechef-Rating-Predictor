@@ -32,7 +32,10 @@
       include ('connect.php');
       $query = "SELECT * FROM ".mysqli_real_escape_string($link, $contestname)." ORDER BY score desc";
 
-      if(!($res = mysqli_query($link, $query)))
+      $res = mysqli_query($link, $query);
+
+
+      if(!$res)
       {
         $query = "SELECT * FROM ".mysqli_real_escape_string($link, $contestname);
         $res = mysqli_query($link, $query);
@@ -108,7 +111,7 @@
 
         else
         {
-          $eperf = log(($n)/(1.1 - 1))/(log(4));
+          $eperf = log(($n)/(1.01 - 1))/(log(4));
         }
 
         //var ECPerf = Math.log((N/(curr.rank - 1 + add) - 1)/(N/EPerf - 1));
@@ -122,7 +125,7 @@
 
         else
         {
-          $aperf = log(($n)/(1.1 - 1))/(log(4));
+          $aperf = log(($n)/(1.01 - 1))/(log(4));
         }
 
         $timesplayed = $participant[$i]['timesplayed'];
@@ -156,8 +159,5 @@
     }
   }
 
-  /*$ob = new Calculate();
-  $contest = "LTIME59A";
-  $ob -> calculaterating($contest);*/
 
 ?>

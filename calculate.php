@@ -14,13 +14,13 @@
     {
       $size = count($participant);
 
-      $ERank = 0.5;
+      $ERank = 0.0;
       $ra = $participant[$ind]['rating'];
       $va = $participant[$ind]['volatility'];
 
       for($i = 0 ; $i < $size ; $i++)
       {
-          
+
         $ERank += $this -> eab($ra, $va, $participant[$i]['rating'], $participant[$i]['volatility']);
       }
 
@@ -30,20 +30,33 @@
     function calculaterating($contestname)
     {
       include ('connect.php');
-      $query = "SELECT * FROM ".mysqli_real_escape_string($link, $contestname);
-      $res = mysqli_query($link, $query);
+      $query = "SELECT * FROM ".mysqli_real_escape_string($link, $contestname)." ORDER BY score desc";
+
+      if(!($res = mysqli_query($link, $query)))
+      {
+        $query = "SELECT * FROM ".mysqli_real_escape_string($link, $contestname);
+        $res = mysqli_query($link, $query);
+      }
+
       $i = 0;
       $participant = [];
 
       $countrank = [];
-
+      $rank = 0;
+      $previousscore = -1;
       $ratingavg = 0.0;
 
       while($ans = mysqli_fetch_array($res))
       {
-        $participant[$i]['username'] = $ans['username'];
-        $participant[$i]['rank'] = $ans['rank'];
+        if($previousscore > $ans['score'])
+        {
+          $rank++;
+          $previousscore = $ans['score'];
+        }
 
+        $participant[$i]['username'] = $ans['username'];
+        $participant[$i]['rank'] = $rank;
+        $ans['rank'] = $rank;
         $countrank[$ans['rank']]++;
 
         $participant[$i]['volatility'] = $ans['volatility'];
@@ -88,12 +101,29 @@
         $pr = $countrank[$participant[$i]['rank']];
         $pr = 1;
 
-        $eperf = log(($n + $pr)/($erank - 1 + $pr))/(log(4));
+        if($erank != 1)
+        {
+          $eperf = log(($n)/($erank - 1))/(log(4));
+        }
+
+        else
+        {
+          $eperf = log(($n)/(1.1 - 1))/(log(4));
+        }
+
         //var ECPerf = Math.log((N/(curr.rank - 1 + add) - 1)/(N/EPerf - 1));
         $ecperf = log(($n/($participant[$i]['rank'] - 1 + $pr) - 1)/($n/$eperf - 1));
         $ecperf /= log(4);
 
-        $aperf = log(($n + $pr)/($participant[$i]['rank'] - 1 + $pr))/(log(4));
+        if($participant[$i]['rank'] != 1)
+        {
+          $aperf = log(($n)/($participant[$i]['rank'] - 1))/(log(4));
+        }
+
+        else
+        {
+          $aperf = log(($n)/(1.1 - 1))/(log(4));
+        }
 
         $timesplayed = $participant[$i]['timesplayed'];
         $rating = $participant[$i]['rating'];
@@ -118,14 +148,14 @@
           }
         }
 
-        $query = "UPDATE ".mysqli_real_escape_string($link, $contestname)." SET newrating = '".mysqli_real_escape_string($link, $newrating)."' WHERE username = '".mysqli_real_escape_string($link, $username)."'";
+        $query = "UPDATE ".mysqli_real_escape_string($link, $contestname)." SET newrating = '".mysqli_real_escape_string($link, $newrating)."', rank = '".mysqli_real_escape_string($link, $rank)."' WHERE username = '".mysqli_real_escape_string($link, $username)."'";
 
         mysqli_query($link, $query);
       }
 
     }
   }
-  
+
   /*$ob = new Calculate();
   $contest = "LTIME59A";
   $ob -> calculaterating($contest);*/

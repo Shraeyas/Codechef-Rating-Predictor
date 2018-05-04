@@ -1,4 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<div class="container">
   <img class="small_image" src = "img/b.jpg">
   <a class="navbar-brand" href="index.php">Rating Predictor</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -14,8 +15,17 @@
       </li>
 
       <li>
-        <a class="nav-link" style = "color : white" href="https://github.com/Shraeyas/cc_rp"><img class="small_image" src = "img/github.png"> Github</a>
+        <a class="nav-link" style = "color : white" href="https://github.com/Shraeyas/Codechef-Rating-Predictor"><img class="small_image" src = "img/github.png"> Github</a>
       </li>
+
+    </ul>
+
+    <ul class="navbar-nav" style = "float:right">
+
+      <li>
+        <a class="nav-link" style = "color : white" href="https://databread.xyz"><img class="small_image" src = "img/b.jpg"> Databread</a>
+      </li>
+
 
     </ul>
 
@@ -26,4 +36,5 @@
     </form>-->
 
   </div>
+</div>
 </nav>

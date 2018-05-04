@@ -15,20 +15,7 @@
   if(!mysqli_query($link, $query))
   die('Nothing Found for this Contest');
 
-  if($_GET['institution'] != "")
-  {
-    $query = "SELECT * FROM ".mysqli_real_escape_string($link, $_GET['contest'])." WHERE institution LIKE '%".mysqli_real_escape_string($link, $_GET['institution'])."%' ORDER BY rank";
-  }
-
-  else if($_GET['country'] != "")
-  {
-    $query = "SELECT * FROM ".mysqli_real_escape_string($link, $_GET['contest'])." WHERE country LIKE '%".mysqli_real_escape_string($link, $_GET['country'])."%' ORDER BY rank";
-  }
-
-  else
-  {
-    $query = "SELECT * FROM ".mysqli_real_escape_string($link, $_GET['contest'])." ORDER BY rank";
-  }
+  $query = "SELECT * FROM ".mysqli_real_escape_string($link, $_GET['contest'])." WHERE institution LIKE '%".mysqli_real_escape_string($link, $_GET['institution'])."%' AND country LIKE '%".mysqli_real_escape_string($link, $_GET['country'])."%' AND username LIKE '%".mysqli_real_escape_string($link, $_GET['username'])."%' ORDER BY rank";
 
   $res = mysqli_query($link, $query);
 
@@ -82,7 +69,12 @@
           <input name="institution" class="form-control" id="exampleInputPassword1" placeholder="Institution" value = "<?php if(isset($_GET['institution'])) echo $_GET['institution']; ?>">
         </div>
 
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <div class="form-group">
+          <label for="exampleInputPassword1">Username</label>
+          <input name="username" class="form-control" id="exampleInputPassword1" placeholder="Username" value = "<?php if(isset($_GET['username'])) echo $_GET['username']; ?>">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Search</button>
 
       </form>
 
@@ -109,14 +101,16 @@
           $pg = "";
           while($ans = mysqli_fetch_array($res))
           {
-            $changes = round($ans['newrating'] - $ans['rating'], 2);
+            if($ans['rank'] == 0)
+            continue;
+            $changes = round(ceil($ans['newrating']) - $ans['rating'], 2);
 
             $pg .= "<tr>";
             $pg .= "<th scope = 'row'>".$i."</th>";
-            $pg .= "<td>".$ans['rank']."</td>"; 
+            $pg .= "<td>".$ans['rank']."</td>";
             $pg .= "<td>".$ans['username']."</td>";
             $pg .= "<td>".round($ans['rating'], 2)."</td>";
-            $pg .= "<td>".round($ans['newrating'], 2)."</td>";
+            $pg .= "<td>".ceil($ans['newrating'])."</td>";
 
             if($changes >= 0)
             $pg .= "<td style = 'color: #31fc40'>".$changes."</td>";

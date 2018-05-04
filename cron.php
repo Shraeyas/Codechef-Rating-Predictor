@@ -27,8 +27,6 @@
 
   $size = count($livelist);
 
-  
-
   $database_ob = new Database();
   $calculate_ob = new Calculate();
 

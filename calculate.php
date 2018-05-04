@@ -14,7 +14,9 @@
     {
       $size = count($participant);
 
-      $ERank = 0.0;
+
+      $ERank = 0.5;
+      
       $ra = $participant[$ind]['rating'];
       $va = $participant[$ind]['volatility'];
 
@@ -124,9 +126,9 @@
 
     }
   }
-
+  
   /*$ob = new Calculate();
-  $contest = "COOK92A";
+  $contest = "LTIME59A";
   $ob -> calculaterating($contest);*/
 
 ?>
